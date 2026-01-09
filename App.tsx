@@ -11,8 +11,9 @@ import PreFooter from './components/PreFooter';
 import Footer from './components/Footer';
 import Loader from './components/Loader';
 
-// Simple Custom Cursor Component
-const CustomCursor = () => {
+// Main App Component
+const App = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const cursorRef = useRef<HTMLDivElement>(null);
   const followerRef = useRef<HTMLDivElement>(null);
 
@@ -60,49 +61,20 @@ const CustomCursor = () => {
 
   return (
     <>
-      {/* Main Dot */}
-      <div ref={cursorRef} className="fixed top-0 left-0 w-2 h-2 bg-[#153F3F] rounded-full pointer-events-none z-[9999] -mt-1 -ml-1 mix-blend-difference hidden md:block"></div>
-      {/* Lagging Follower Ring */}
+      {/* Custom Cursor Elements */}
+      <div 
+        ref={cursorRef} 
+        className="fixed top-0 left-0 w-2 h-2 bg-[#153F3F] rounded-full pointer-events-none z-[9999] hidden md:block -ml-1 -mt-1" 
+      />
       <div 
         ref={followerRef} 
-        className="fixed top-0 left-0 w-8 h-8 border border-[#153F3F] rounded-full pointer-events-none z-[9998] -mt-4 -ml-4 transition-transform duration-100 ease-out mix-blend-difference hidden md:block will-change-transform"
-      ></div>
-    </>
-  );
-};
+        className="fixed top-0 left-0 w-8 h-8 border border-[#153F3F] rounded-full pointer-events-none z-[9998] transition-transform duration-100 ease-out hidden md:block -ml-4 -mt-4" 
+      />
 
-const App: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    if (isLoading) {
-       document.body.style.overflow = 'hidden';
-       window.scrollTo(0, 0);
-    } else {
-       document.body.style.overflow = 'unset';
-       
-       // Initialize intersection observer after loading is done
-       const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-up', 'opacity-100');
-            entry.target.classList.remove('opacity-0');
-          }
-        });
-      }, { threshold: 0.1 });
-  
-      document.querySelectorAll('.reveal').forEach((el) => {
-        el.classList.add('opacity-0');
-        observer.observe(el);
-      });
-  
-      return () => observer.disconnect();
-    }
-  }, [isLoading]);
-
-  return (
-    <>
-      <CustomCursor />
+      {/* 
+         Loader controls the initial "isLoading" state. 
+         When it finishes (onLoadingComplete), we set isLoading to false.
+      */}
       {isLoading && <Loader onLoadingComplete={() => setIsLoading(false)} />}
       
       <div className="w-full relative min-h-screen">
@@ -111,10 +83,14 @@ const App: React.FC = () => {
         {/* 
            The Main Content has a high Z-Index and a margin-bottom.
            This allows the footer (fixed behind it) to be revealed.
-           The margin-bottom matches the footer height approximately.
         */}
         <main className="relative z-10 bg-[#F5F3F0] mb-[80vh] md:mb-[70vh] shadow-[0_50px_100px_rgba(0,0,0,0.5)]">
-          <Hero />
+          {/* 
+             Pass !isLoading as startAnimation. 
+             This ensures Hero animations wait until the Loader is gone.
+          */}
+          <Hero startAnimation={!isLoading} />
+          
           <WhyUs />
           <Portfolio />
           <About />

@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-const Hero: React.FC = () => {
+interface HeroProps {
+  startAnimation: boolean;
+}
+
+const Hero: React.FC<HeroProps> = ({ startAnimation }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
 
@@ -34,7 +38,7 @@ const Hero: React.FC = () => {
 
   const handleNext = () => {
     setCurrentSlide((prev) => (prev + 1) % studioDetails.length);
-    setIsPlaying(false); // Pause auto-play on manual interaction
+    setIsPlaying(false);
   };
 
   const handlePrev = () => {
@@ -48,8 +52,10 @@ const Hero: React.FC = () => {
     <section className="relative min-h-screen w-full bg-[#F5F3F0] flex flex-col items-center pt-36 pb-20 px-4 md:px-12 overflow-hidden">
       
       {/* Decorative Musical SVG: Floating Note */}
-      <div className="absolute top-32 left-[10%] opacity-20 animate-float-slow pointer-events-none">
-        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <div 
+        className={`absolute top-32 left-[10%] opacity-20 pointer-events-none transition-all duration-1000 delay-1000 ${startAnimation ? 'translate-y-0 opacity-20' : 'translate-y-10 opacity-0'}`}
+      >
+        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="animate-float-slow">
             <path d="M9 18V5L21 3V16" stroke="#153F3F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             <circle cx="6" cy="18" r="3" fill="#153F3F"/>
             <circle cx="18" cy="16" r="3" fill="#153F3F"/>
@@ -58,24 +64,49 @@ const Hero: React.FC = () => {
 
       <div className="container mx-auto max-w-6xl flex flex-col items-center text-center relative z-10">
         
-        {/* Headline */}
-        <h1 className="font-serif text-5xl md:text-8xl lg:text-9xl text-[#153F3F] leading-[0.9] tracking-tighter mb-8 animate-fade-up relative">
-          Unforgettable <br/>
-          moments start <br/>
-          with the <span className="italic font-light text-[#2B6F6F]">music.</span>
-          
-          {/* Scribble decoration */}
-          <svg className="absolute -bottom-4 right-0 w-[120px] md:w-[200px] text-[#e05a39] opacity-80" viewBox="0 0 200 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-             <path d="M2 10C40 15 80 15 198 2" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
-          </svg>
+        {/* Headline - Split for staggered entrance */}
+        <h1 className="font-serif text-5xl md:text-8xl lg:text-9xl text-[#153F3F] leading-[0.95] tracking-tighter mb-8 relative">
+           {/* Line 1 */}
+           <div className="overflow-hidden">
+              <span className={`block transition-all duration-1000 cubic-bezier(0.22, 1, 0.36, 1) delay-300 ${startAnimation ? 'translate-y-0 opacity-100' : 'translate-y-[120%] opacity-0'}`}>
+                Unforgettable
+              </span>
+           </div>
+           
+           {/* Line 2 */}
+           <div className="overflow-hidden">
+              <span className={`block transition-all duration-1000 cubic-bezier(0.22, 1, 0.36, 1) delay-500 ${startAnimation ? 'translate-y-0 opacity-100' : 'translate-y-[120%] opacity-0'}`}>
+                moments start
+              </span>
+           </div>
+
+           {/* Line 3 */}
+           <div className="overflow-hidden relative pb-4 md:pb-6">
+               <span className={`block transition-all duration-1000 cubic-bezier(0.22, 1, 0.36, 1) delay-700 ${startAnimation ? 'translate-y-0 opacity-100' : 'translate-y-[120%] opacity-0'}`}>
+                  with the <span className="italic font-light text-[#2B6F6F]">music.</span>
+               </span>
+               
+               {/* Scribble decoration - Revealed last */}
+               <svg 
+                 className={`absolute bottom-2 md:bottom-4 right-0 w-[120px] md:w-[200px] text-[#e05a39] opacity-80 transition-all duration-1000 delay-1000 ${startAnimation ? 'stroke-dashoffset-0 opacity-80' : 'stroke-dashoffset-full opacity-0'}`} 
+                 viewBox="0 0 200 20" fill="none" xmlns="http://www.w3.org/2000/svg"
+                 style={{ strokeDasharray: 200, strokeDashoffset: startAnimation ? 0 : 200 }}
+               >
+                  <path d="M2 10C40 15 80 15 198 2" stroke="currentColor" strokeWidth="3" strokeLinecap="round"/>
+               </svg>
+           </div>
         </h1>
 
-        <p className="font-sans text-[#153F3F] text-lg md:text-xl max-w-2xl leading-relaxed mb-12 animate-fade-up delay-100">
+        <p 
+            className={`font-sans text-[#153F3F] text-lg md:text-xl max-w-2xl leading-relaxed mb-12 transition-all duration-1000 delay-1000 ${startAnimation ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+        >
           Rooted in Emeryville, bringing creativity & production to life.
         </p>
 
         {/* BENTO GRID DASHBOARD */}
-        <div className="w-full grid grid-cols-1 md:grid-cols-12 gap-6 animate-fade-up delay-200">
+        <div 
+            className={`w-full grid grid-cols-1 md:grid-cols-12 gap-6 transition-all duration-1000 delay-[1200ms] ${startAnimation ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+        >
             
             {/* Card 1: Spotify-Style Studio Player */}
             <div className="md:col-span-3 bg-[#153F3F] rounded-3xl overflow-hidden shadow-xl flex flex-col h-[380px] group transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl border border-[#153F3F]">
@@ -102,7 +133,7 @@ const Hero: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Bottom Half: Player Controls (Solid Background for Contrast) */}
+                {/* Bottom Half: Player Controls */}
                 <div className="flex-1 px-5 py-4 flex flex-col justify-between relative bg-[#153F3F]">
                     
                     {/* Track Info */}
