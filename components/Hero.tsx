@@ -53,7 +53,7 @@ const Hero: React.FC<HeroProps> = ({ startAnimation }) => {
       
       {/* Decorative Musical SVG: Floating Note */}
       <div 
-        className={`absolute top-32 left-[10%] opacity-20 pointer-events-none transition-all duration-1000 delay-1000 ${startAnimation ? 'translate-y-0 opacity-20' : 'translate-y-10 opacity-0'}`}
+        className={`absolute top-32 left-[10%] opacity-20 pointer-events-none transition-all duration-1000 delay-500 ${startAnimation ? 'translate-y-0 opacity-20' : 'translate-y-10 opacity-0'}`}
       >
         <svg width="60" height="60" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="animate-float-slow">
             <path d="M9 18V5L21 3V16" stroke="#153F3F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -68,27 +68,27 @@ const Hero: React.FC<HeroProps> = ({ startAnimation }) => {
         <h1 className="font-serif text-5xl md:text-8xl lg:text-9xl text-[#153F3F] leading-[0.95] tracking-tighter mb-8 relative">
            {/* Line 1 */}
            <div className="overflow-hidden">
-              <span className={`block transition-all duration-1000 cubic-bezier(0.22, 1, 0.36, 1) delay-300 ${startAnimation ? 'translate-y-0 opacity-100' : 'translate-y-[120%] opacity-0'}`}>
+              <span className={`block transition-all duration-1000 cubic-bezier(0.22, 1, 0.36, 1) ${startAnimation ? 'translate-y-0 opacity-100' : 'translate-y-[120%] opacity-0'}`}>
                 Unforgettable
               </span>
            </div>
            
            {/* Line 2 */}
            <div className="overflow-hidden">
-              <span className={`block transition-all duration-1000 cubic-bezier(0.22, 1, 0.36, 1) delay-500 ${startAnimation ? 'translate-y-0 opacity-100' : 'translate-y-[120%] opacity-0'}`}>
+              <span className={`block transition-all duration-1000 cubic-bezier(0.22, 1, 0.36, 1) delay-100 ${startAnimation ? 'translate-y-0 opacity-100' : 'translate-y-[120%] opacity-0'}`}>
                 moments start
               </span>
            </div>
 
            {/* Line 3 */}
            <div className="overflow-hidden relative pb-4 md:pb-6">
-               <span className={`block transition-all duration-1000 cubic-bezier(0.22, 1, 0.36, 1) delay-700 ${startAnimation ? 'translate-y-0 opacity-100' : 'translate-y-[120%] opacity-0'}`}>
+               <span className={`block transition-all duration-1000 cubic-bezier(0.22, 1, 0.36, 1) delay-200 ${startAnimation ? 'translate-y-0 opacity-100' : 'translate-y-[120%] opacity-0'}`}>
                   with the <span className="italic font-light text-[#2B6F6F]">music.</span>
                </span>
                
                {/* Scribble decoration - Revealed last */}
                <svg 
-                 className={`absolute bottom-2 md:bottom-4 right-0 w-[120px] md:w-[200px] text-[#e05a39] opacity-80 transition-all duration-1000 delay-1000 ${startAnimation ? 'stroke-dashoffset-0 opacity-80' : 'stroke-dashoffset-full opacity-0'}`} 
+                 className={`absolute bottom-2 md:bottom-4 right-0 w-[120px] md:w-[200px] text-[#e05a39] opacity-80 transition-all duration-1000 delay-500 ${startAnimation ? 'stroke-dashoffset-0 opacity-80' : 'stroke-dashoffset-full opacity-0'}`} 
                  viewBox="0 0 200 20" fill="none" xmlns="http://www.w3.org/2000/svg"
                  style={{ strokeDasharray: 200, strokeDashoffset: startAnimation ? 0 : 200 }}
                >
@@ -98,14 +98,14 @@ const Hero: React.FC<HeroProps> = ({ startAnimation }) => {
         </h1>
 
         <p 
-            className={`font-sans text-[#153F3F] text-lg md:text-xl max-w-2xl leading-relaxed mb-12 transition-all duration-1000 delay-1000 ${startAnimation ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+            className={`font-sans text-[#153F3F] text-lg md:text-xl max-w-2xl leading-relaxed mb-12 transition-all duration-1000 delay-500 ${startAnimation ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
         >
           Rooted in Emeryville, bringing creativity & production to life.
         </p>
 
         {/* BENTO GRID DASHBOARD */}
         <div 
-            className={`w-full grid grid-cols-1 md:grid-cols-12 gap-6 transition-all duration-1000 delay-[1200ms] ${startAnimation ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
+            className={`w-full grid grid-cols-1 md:grid-cols-12 gap-6 transition-all duration-1000 delay-700 ${startAnimation ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}
         >
             
             {/* Card 1: Spotify-Style Studio Player */}

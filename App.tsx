@@ -17,6 +17,38 @@ const App = () => {
   const cursorRef = useRef<HTMLDivElement>(null);
   const followerRef = useRef<HTMLDivElement>(null);
 
+  // Scroll Reveal Observer
+  useEffect(() => {
+    // We only attach the observer once the loader is finished (or immediately if you prefer)
+    // to ensure animations don't play behind the loader screen.
+    if (isLoading) return;
+
+    const observerOptions = {
+      root: null, // Use the viewport as the root
+      rootMargin: '0px 0px -10% 0px', // Trigger when the top of the element is 10% from the bottom of the viewport
+      threshold: 0.1, // Trigger when at least 10% of the element is visible
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+          observer.unobserve(entry.target); // Ensure animation only plays once
+        }
+      });
+    }, observerOptions);
+
+    // Select all elements with the 'reveal' class
+    const elements = document.querySelectorAll('.reveal');
+    elements.forEach((el) => observer.observe(el));
+
+    // Cleanup observer on unmount
+    return () => {
+      observer.disconnect();
+    };
+  }, [isLoading]);
+
+  // Custom Cursor Logic
   useEffect(() => {
     const moveCursor = (e: MouseEvent) => {
       if (cursorRef.current) {
